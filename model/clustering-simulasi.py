@@ -1,7 +1,7 @@
 import random
 import pandas as pd
 
-# Input Location & Day
+# Contoh Input Location & Day
 
 locations = [[1.2, 4.2],
              [3.2, 5.1],
