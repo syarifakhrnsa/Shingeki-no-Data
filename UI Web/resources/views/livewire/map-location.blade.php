@@ -7,6 +7,7 @@
                     <div class="card-header bg-dark text-white">Mapbox</div>
                     <div class="card-body">
                         <div id='map' style='width: 100%; height: 75vh;'></div>
+
                     </div>
                 </div>
             </div>
@@ -15,34 +16,49 @@
                 <div class="card">
                     <div class="card-header bg-dark text-white">form</div>
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Longitude</label>
-                                    <input wire:model="long" type="text" class="form-control">
+                        <form wire:submit.prevent="saveLocation">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Longitude</label>
+                                        <input wire:model="long" type="text" class="form-control">
+                                        @error('long')
+                                    <small class="text-danger">{{ $message }}</small>
+                                       @enderror
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Latitude</label>
+                                        <input wire:model="lat" type="text" class="form-control">
+                                        @error('lat')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <label>Latitude</label>
-                                    <input wire:model="lat" type="text" class="form-control">
-                                </div>
+                            <div class="form-group mt-3">
+                                <label>City</label>
+                                <input wire:model="city" type="text" class="form-control">
+                                @error('city')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
                             </div>
-                        </div>
+                            <div class="d-grid gap-2 mt-3">
+                              <button class="btn btn-dark" type="submit">Submit location</button>
+                            </div>
                     </div>
                 </div>
+              </form>
             </div>
         </div>
     </div>
-
-
-
 </div>
-
+{{--  --}}
 @push('scripts')
     <script>
         // document.addEventListener('livewire:load', () => {})
-        const defaultLocation = [106.99429022945975, -6.2350495840466635]
+        const defaultLocation = [106.73872688170701, -6.2927887513008045]
 
         mapboxgl.accessToken = '{{ env('MAPBOX_KEY') }}';
         var map = new mapboxgl.Map({
@@ -54,29 +70,72 @@
 
         map.setStyle('mapbox://styles/mapbox/streets-v11')
 
-        map.addControl(new mapboxgl.NavigationControl())
 
-        map.addControl(
-            new mapboxgl.GeolocateControl({
-                positionOptions: {
-                    enableHighAccuracy: true
-                },
-                trackUserLocation: true
+
+
+
+        const loadLocations = (geoJson) => {
+            geoJson.features.forEach((locations) => {
+                const {geometry,properties} = locations
+                const {iconSize,locationId,city} = properties
+
+// if city = 1 , make the marker blue 
+                
+                let markElement = document.createElement('div')
+                markElement.className = 'marker' + locationId
+                markElement.id = locationId
+                markElement.style.backgroundImage =
+                    'url(https://www.clipartmax.com/png/full/114-1148546_base-marker-gps-location-map-map-marker-marker-icon.png)'
+                markElement.style.backgroundSize = 'cover'
+                markElement.style.width = '30px'
+                markElement.style.height = '30px'
+
+                // const popUp = new mapboxgl.Popup({
+                //     offset: 25,
+                // }).setHTML(city).setMaxWidth('400px')
+
+                new mapboxgl.Marker({markElement,draggable: true,color: 'red'})
+                    .setLngLat(geometry.coordinates)
+                    // .setPopup(popUp)
+                    .addTo(map)
+                    
+                if(city == 'Bekasi'){
+                    var marker = new mapboxgl.Marker({
+                        draggable: true,
+                        color: 'blue'
+                    })
+                    marker.setLngLat(geometry.coordinates)
+                    marker.addTo(map)}
+                
+                if(city == 'Jakarta'){
+                    var marker = new mapboxgl.Marker({
+                        draggable: true,
+                        color: 'orange'
+                    })
+                    marker.setLngLat(geometry.coordinates)
+                    marker.addTo(map)}
+                
+
+                    console.log(locationId);
+
+
             })
-        );
+        }
+
+        loadLocations({!! $geoJson !!})
+
+        window.addEventListener('locationAdded', (e) => {
+          loadLocations(JSON.parse(e.detail))
+        })
+        
 
         map.on('click', (e) => {
             const longitude = e.lngLat.lng;
             const latitude = e.lngLat.lat;
-            // make const to get the city
-            // const city = getCity(latitude, longitude);
-
-
 
             @this.long = longitude;
             @this.lat = latitude;
 
-            // console.log(city);
         })
     </script>
 @endpush
