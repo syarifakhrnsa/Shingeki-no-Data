@@ -1,0 +1,26 @@
+Database SQL
+3 kolom -> latitude, longitude, label
+// Label bakal kosong kalo belom cluster
+
+// List di PHP
+$array_location = [latitude, longitude]
+$hari = 
+
+cluster (
+    run python($array_location, $hari)
+    output berupa array_location_BERLABEL
+    add label to db
+    update kolom
+)
+
+add Data(
+    delete all label di database 
+    add data to db
+    $array_location = data di db
+)
+
+delete Data(
+    delete all label
+    delete data to array_location
+    $array_location = data di db
+)
