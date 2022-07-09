@@ -9,10 +9,7 @@ use Livewire\Component;
 use App\Http\Livewire\clustering;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
-use Phpml\Classification\KNearestNeighbors;
-
-
-use Phpml\Classification\KMeans;
+use Phpml\Clustering\KMeans;
 
 class MapLocation extends Component
 {
@@ -128,8 +125,8 @@ class MapLocation extends Component
 
 
         // }
-        // $kMeans = new KMeans($day);
-        // $test=$kMeans->cluster($locations_array);
+        $kMeans = new KMeans($day);
+        $test=$kMeans->cluster($locations_array);
 
         // var_dump($test);
         
@@ -145,7 +142,7 @@ class MapLocation extends Component
 
         // return view('home',compact('day','locations_json'));
 
-
+        
 
     }
 }
