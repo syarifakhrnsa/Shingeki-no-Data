@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('city');
             $table->string('long');
             $table->string('lat');
+            $table->string('user_id');
+            $table->string('label')->nullable();
             $table->timestamps();
         });
     }

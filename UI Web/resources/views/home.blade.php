@@ -14,6 +14,10 @@
                         </div>
                     @endif
 
+                    <div class="card-body">
+
+                    </div>
+
                     {{ __('You are logged in!') }}
                 </div>
             </div>

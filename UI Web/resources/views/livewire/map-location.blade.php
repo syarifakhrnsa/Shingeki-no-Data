@@ -56,19 +56,23 @@
 </div>
 {{--  --}}
 @push('scripts')
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+
     <script>
-        // document.addEventListener('livewire:load', () => {})
+        document.addEventListener('livewire:load', () => {  })
         const defaultLocation = [106.73872688170701, -6.2927887513008045]
 
-        mapboxgl.accessToken = '{{ env('MAPBOX_KEY') }}';
+        mapboxgl.accessToken = "{{ env('MAPBOX_KEY') }}";
         var map = new mapboxgl.Map({
             container: 'map',
             center: defaultLocation,
             zoom: 11.5,
+            style: "mapbox://styles/mapbox/streets-v11"
 
         });
 
-        map.setStyle('mapbox://styles/mapbox/streets-v11')
+        
+        map.addControl(new MapboxGeocoder({accessToken: mapboxgl.accessToken,mapboxgl: mapboxgl}))
 
 
 
@@ -78,14 +82,11 @@
             geoJson.features.forEach((locations) => {
                 const {geometry,properties} = locations
                 const {iconSize,locationId,city} = properties
-
-// if city = 1 , make the marker blue 
                 
                 let markElement = document.createElement('div')
                 markElement.className = 'marker' + locationId
                 markElement.id = locationId
-                markElement.style.backgroundImage =
-                    'url(https://www.clipartmax.com/png/full/114-1148546_base-marker-gps-location-map-map-marker-marker-icon.png)'
+                markElement.style.backgroundImage ='url(https://www.clipartmax.com/png/full/114-1148546_base-marker-gps-location-map-map-marker-marker-icon.png)'
                 markElement.style.backgroundSize = 'cover'
                 markElement.style.width = '30px'
                 markElement.style.height = '30px'
@@ -94,12 +95,19 @@
                 //     offset: 25,
                 // }).setHTML(city).setMaxWidth('400px')
 
+                markElement.addEventListener('click', (e) => {
+
+                    const locationId = e.toElement.id
+                    @this.findLocationById(locationId)
+                   
+                })
+
                 new mapboxgl.Marker({markElement,draggable: true,color: 'red'})
                     .setLngLat(geometry.coordinates)
                     // .setPopup(popUp)
                     .addTo(map)
                     
-                if(city == 'Bekasi'){
+                if(city == '1'){
                     var marker = new mapboxgl.Marker({
                         draggable: true,
                         color: 'blue'
@@ -107,7 +115,7 @@
                     marker.setLngLat(geometry.coordinates)
                     marker.addTo(map)}
                 
-                if(city == 'Jakarta'){
+                if(city == '2'){
                     var marker = new mapboxgl.Marker({
                         draggable: true,
                         color: 'orange'
@@ -116,7 +124,7 @@
                     marker.addTo(map)}
                 
 
-                    console.log(locationId);
+                    // console.log(locationId);
 
 
             })
@@ -127,15 +135,18 @@
         window.addEventListener('locationAdded', (e) => {
           loadLocations(JSON.parse(e.detail))
         })
-        
+ 
 
         map.on('click', (e) => {
             const longitude = e.lngLat.lng;
             const latitude = e.lngLat.lat;
 
+
             @this.long = longitude;
             @this.lat = latitude;
 
-        })
+        }) 
+   
+    
     </script>
 @endpush
