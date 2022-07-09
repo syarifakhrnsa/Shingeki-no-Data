@@ -118,7 +118,7 @@
                 if(city == '2'){
                     var marker = new mapboxgl.Marker({
                         draggable: true,
-                        color: 'orange'
+                        color: '#32a852'
                     })
                     marker.setLngLat(geometry.coordinates)
                     marker.addTo(map)}

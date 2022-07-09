@@ -13,7 +13,7 @@ use Phpml\Clustering\KMeans;
 
 class MapLocation extends Component
 {
-    public $locationId, $lat, $long,$city;
+    public $locationId, $lat,$long,$city,$label;
     public $geoJson;
     
     public function loadLocations(){
@@ -38,7 +38,7 @@ class MapLocation extends Component
                 'properties'=>[
                     'city'=>$location->city,
                     'locationId'=>$location->id,
-                    'day'=>$location->id,
+                    'label'=>$location->label,
                     ]
 
             ];
@@ -99,46 +99,22 @@ class MapLocation extends Component
 
 
     public function clustering(){
-
-        // get and convert to array type of json
-        // $locations_array = Location::select('lat','long')->get();
-        // $day = 3;
-        // $locations_json = json_encode($locations_array);
-        // $command = escapeshellcmd("clustering.py $day $locations_json");
-        // $output = json_decode(shell_exec($command));
-
-
-
-        $locations_array = Location::select(['locations.lat','locations.long'])->get()->toArray();
+        $locations_asc_array = Location::select('lat','long')->get()->toArray();
         $day = 3;
-        // $array = array_values($locations_array);
-        // $locations_json = json_encode($array);
-        // $command = escapeshellcmd("App\Http\Livewire\clustering.py $day $locations_json");
-                
-        // $output = shell_exec($command);
+        $locations = [];
+        // deklar buat array
+        foreach($locations_asc_array as $array) {
+        array_push($locations, array_values($array));
+         };
 
-        // $prosess = new Process(['python3 App\Http\Livewire\clustering.py','ls']);
-        // $prosess->run();
-
-        // if (!$prosess->isSuccessful()) {
-        //     throw new ProcessFailedException($prosess);
-
-
-        // }
         $kMeans = new KMeans($day);
-        $test=$kMeans->cluster($locations_array);
+        $test=$kMeans->cluster($locations);
 
-        // var_dump($test);
-        
-        // execute clustering.py file
-
-
-
+        var_dump($test);
 
 
         
 
-        // var_dump($output);
 
         // return view('home',compact('day','locations_json'));
 
