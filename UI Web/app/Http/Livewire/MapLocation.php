@@ -24,11 +24,33 @@ class MapLocation extends Component
         // $command = escapeshellcmd("clustering.py $day $locations_json");
         // $locations = json_decode(shell_exec($command));
 
+        //---------------
+        //
         $locations = Location::orderBy('created_at', 'desc')->get();
-
+       
+        //---------------------------
+        //$allLabel = UserPlan:: //Ambil plan Label WHERE user id yang login ->get()
+        // User Masuk ke Plan x
+        // if plan x udah ada JSONnya
+        //      $labels = jsondecode($AllLabel tp bagian plan x
+        //-----------------
+        
         $customLocations = [];
-        // give foreach with arraya 
+        // give foreach with array
 
+        
+//          BUAT LABELLING        
+//         function searchLabel(){
+//           foreach ($labels as $label){
+//             foreach ($label as $coordinate){
+//                 if $coordinate[0] == $location->long && $coordinate[1] == $location->lat {
+//                     return $label
+//                 }
+//             }
+//           }
+//         };
+            
+        
         foreach($locations as $location){
             $customLocations[] = [
                 'type'=>'Feature',
@@ -38,7 +60,7 @@ class MapLocation extends Component
                 'properties'=>[
                     'city'=>$location->city,
                     'locationId'=>$location->id,
-                    'label'=>$location->label,
+                    //'label'=>$searchLabel(),
                     ]
 
             ];
