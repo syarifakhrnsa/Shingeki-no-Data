@@ -27,18 +27,18 @@ class MyTest extends Component
         $locations = Marker::orderBy('created_at', 'desc')->get();
 
 
-       function searchLabel(){
-        $locations = Marker::orderBy('created_at', 'desc')->get();
-        $labels =json_decode($locations->pluck('label')->toJson());
-        foreach($labels as $label){
-            foreach($label as $coordinate){
-              if($coordinate[0] == $locations->long && $coordinate[1] == $locations->lat)  {
-                return $label;
-              }
+    //    function searchLabel(){
+    //     $locations = Marker::orderBy('created_at', 'desc')->get();
+    //     $labels =json_decode($locations->pluck('label')->toJson());
+    //     foreach($labels as $label){
+    //         foreach($label as $coordinate){
+    //           if($coordinate[0] == $locations->long && $coordinate[1] == $locations->lat)  {
+    //             return $label;
+    //           }
 
-            }
-        }
-       }
+    //         }
+    //     }
+    //    }
 
 
 
@@ -57,7 +57,7 @@ class MyTest extends Component
                     'iconSize' => [50,50],
                     'locationId' => $location->id,
                     'title' => $location->title,
-                    'label' => searchLabel(),
+                    // 'label' => searchLabel(),
                 ]
             ];
         };

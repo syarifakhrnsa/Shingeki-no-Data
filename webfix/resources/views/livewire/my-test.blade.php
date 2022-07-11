@@ -84,7 +84,7 @@
         const defaultLocation = [106.697, -6.313];
         const coordinateInfo = document.getElementById('info');
 
-        mapboxgl.accessToken = "{{env('MAPBOX_ACCESS_TOKEN')}}";
+        mapboxgl.accessToken = "pk.eyJ1Ijoic3lhdHJpYSIsImEiOiJjbDU3Y3M4czAxcmxuM2l0ZDlxejBuYTRuIn0.Sed4ONkUUIRIwzNh7KbOMA";
         let map = new mapboxgl.Map({
             container: "map",
             center: defaultLocation,
@@ -92,8 +92,7 @@
             style: "mapbox://styles/mapbox/streets-v11"
         });
 
-        // map.addControl(new mapboxgl.NavigationControl());
-        map.addControl(new MapboxGeocoder({accessToken: mapboxgl.accessToken,mapboxgl: mapboxgl}))
+        map.addControl(new mapboxgl.NavigationControl());
 
         const loadGeoJSON = (geojson) => {
 
@@ -116,7 +115,7 @@
                     <table class="table table-sm mt-2">
                          <tbody>
                             <tr>
-                                <td>Place</td>
+                                <td>Title</td>
                                 <td>${title}</td>
                             </tr>
                         </tbody>
@@ -128,30 +127,14 @@
 ;
 
                 el.addEventListener('click', (e) => {   
-                    const locationId = e.toElement.id                  
+                    const locationId = e.target.id;                 
                     @this.findLocationById(locationId)
                 }); 
             
-                new mapboxgl.Marker({el,color: 'red'})
-                    .setLngLat(geometry.coordinates)
-                    .setPopup(popup)
-                    .addTo(map)
-                    
-                if(title == '1'){
-                    var marker = new mapboxgl.Marker({
-                        color: 'blue'
-                    })
-                    marker.setLngLat(geometry.coordinates)
-                    marker.setPopup(popup)
-                    marker.addTo(map)}
-                
-                if(title == '2'){
-                    var marker = new mapboxgl.Marker({
-                        color: 'orange'
-                    })
-                    marker.setLngLat(geometry.coordinates)
-                    marker.setPopup(popup)
-                    marker.addTo(map)}
+                new mapboxgl.Marker(el)
+                .setLngLat(geometry.coordinates)
+                .setPopup(popup)
+                .addTo(map);
             });
         }
 
@@ -168,7 +151,18 @@
             });
         }) 
         
-       
+        window.addEventListener('deleteLocation', (e) => {  
+            console.log(e.detail);         
+            swal({
+                title: "Location Delete!",
+                text: "Your location deleted sucessfully!",
+                icon: "success",
+                button: "Ok",
+            }).then((value) => {
+               $('.marker' + e.detail).remove();
+               $('.mapboxgl-popup').remove();
+            });
+        })
 
         window.addEventListener('updateLocation', (e) => {  
             console.log(e.detail);         
@@ -193,14 +187,13 @@
         }    
 
         map.on('click', (e) => {
-            const longitude = e.lngLat.lng;
-            const latitude = e.lngLat.lat;
-
-
-            @this.long = longitude;
-            @this.lat = latitude;
-
-                    
+            if(@this.isEdit){
+                return
+            }else{
+                coordinateInfo.innerHTML = JSON.stringify(e.point) + '<br />' + JSON.stringify(e.lngLat.wrap());
+                @this.long = e.lngLat.lng;
+                @this.lat = e.lngLat.lat;
+            }            
         });  
     })
 </script>
