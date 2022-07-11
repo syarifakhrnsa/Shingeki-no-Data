@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 use Livewire\Component;
 use App\Models\Marker;
+use Faker\Core\Coordinates;
 use Phpml\Clustering\KMeans;
 
 class MyTest extends Component
@@ -20,8 +21,26 @@ class MyTest extends Component
     public $geoJson; 
     public $isEdit = false;
 
+
+
     private function getLocations() {
         $locations = Marker::orderBy('created_at', 'desc')->get();
+
+
+       function searchLabel(){
+        $locations = Marker::orderBy('created_at', 'desc')->get();
+        $labels =json_decode($locations->pluck('label')->toJson());
+        foreach($labels as $label){
+            foreach($label as $coordinate){
+              if($coordinate[0] == $locations->long && $coordinate[1] == $locations->lat)  {
+                return $label;
+              }
+
+            }
+        }
+       }
+
+
 
         $customLocation = [];
 
@@ -38,6 +57,7 @@ class MyTest extends Component
                     'iconSize' => [50,50],
                     'locationId' => $location->id,
                     'title' => $location->title,
+                    'label' => searchLabel(),
                 ]
             ];
         };
