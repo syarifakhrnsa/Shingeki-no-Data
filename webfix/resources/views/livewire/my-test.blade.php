@@ -135,6 +135,21 @@
                 .setLngLat(geometry.coordinates)
                 .setPopup(popup)
                 .addTo(map);
+
+                
+                if(title == '1'){
+                    var marker = new mapboxgl.Marker({
+                        color: 'blue'
+                    })
+                    marker.setLngLat(geometry.coordinates)
+                    marker.addTo(map)}
+                
+                if(title == '2'){
+                    var marker = new mapboxgl.Marker({
+                        color: '#32a852'
+                    })
+                    marker.setLngLat(geometry.coordinates)
+                    marker.addTo(map)}
             });
         }
 
