@@ -27,7 +27,7 @@ class MapLocation extends Component
         $locations = Location::orderBy('created_at', 'desc')->get();
 
         $customLocations = [];
-        // give foreach with arraya 
+        // give foreach with array 
 
         foreach($locations as $location){
             $customLocations[] = [

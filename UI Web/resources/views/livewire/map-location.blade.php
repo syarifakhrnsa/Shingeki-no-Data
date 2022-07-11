@@ -45,7 +45,7 @@
                                 @enderror
                             </div>
                             <div class="d-grid gap-2 mt-3">
-                              <button class="btn btn-dark" type="submit">Submit location</button>
+                              <button class="btn btn-dark " type="submit">Submit location</button>
                             </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
 </div>
 {{--  --}}
 @push('scripts')
-<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+<script src='https://api.mapbox.com/mapbo-gl-js/v1.12.0/mapbox-gl.js'></script>
 
     <script>
         document.addEventListener('livewire:load', () => {  })
