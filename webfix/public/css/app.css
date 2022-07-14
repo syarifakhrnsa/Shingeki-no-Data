@@ -85,6 +85,11 @@ hr {
   overflow: visible;
 }
 
+div.table-wrapper {
+  max-height: 1px; /* max height for the table */
+  overflow-y: scroll;
+}
+
 h1,
 h2,
 h3,

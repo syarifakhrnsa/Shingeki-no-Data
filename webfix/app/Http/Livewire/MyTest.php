@@ -2,12 +2,13 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Locations;
+use App\Models\UserPlan;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 use Livewire\Component;
-use App\Models\Marker;
 use Faker\Core\Coordinates;
 use Phpml\Clustering\KMeans;
 
@@ -17,18 +18,25 @@ class MyTest extends Component
     
     public $count = 5; 
     public $locationId,$long,$lat,$title; 
-   
     public $geoJson; 
+    public $plan ; 
     public $isEdit = false;
 
 
 
-    private function getLocations() {
-        $locations = Marker::orderBy('created_at', 'desc')->get();
+
+    public function getLocations() {
+
+        // $plan = UserPlan::all();
+        // $this->plan = Locations::where('plan_id', mount()->id)->get();
+        // $locations = Locations::where('plan_id', $this->plan)->get();
+
+        $locations = Locations::orderBy('id', 'desc')->get();
+        // $locations = Locations::where('plan_id', 49)->get();
 
 
     //    function searchLabel(){
-    //     $locations = Marker::orderBy('created_at', 'desc')->get();
+    //     $locations = UserPlan::orderBy('created_at', 'desc')->get();
     //     $labels =json_decode($locations->pluck('label')->toJson());
     //     foreach($labels as $label){
     //         foreach($label as $coordinate){
@@ -71,8 +79,12 @@ class MyTest extends Component
         $this->geoJson = $geoJson;
     }
    
+    // return function render wit $id parameter 
     public function render()
     {
+        // $this->plan = Locations::where('plan_id', $id)->get();
+        // pass $id to this function
+        // $this->getLocations($id);
         $this->getLocations();
         return view('livewire.my-test');
     }
@@ -93,18 +105,11 @@ class MyTest extends Component
            
         ]);
 
-        // $imageName = md5($this->image.microtime()).'.'.$this->image->extension();
-
-        // Storage::putFileAs(
-        //     'public/images',
-        //     $this->image,
-        //     $imageName
-        // );
-
-        Marker::create([
+        Locations::create([
             'long' => $this->long,
             'lat' => $this->lat,
             'title' => $this->title,
+            'plan_id' => $this->plan,
             'user_id' => Auth::id(),
         ]);
 
@@ -120,10 +125,10 @@ class MyTest extends Component
             'long' => 'required',
             'lat' => 'required',
             'title' => 'required',
-            'description' => 'required',
+            
         ]);
 
-        $location = Marker::findOrFail($this->locationId);
+        $location = Locations::findOrFail($this->locationId);
  
             $updateData = [
                 'title' => $this->title,
@@ -139,7 +144,7 @@ class MyTest extends Component
     }
 
     public function deleteLocationById(){
-        $location = Marker::findOrFail($this->locationId);
+        $location = Locations::findOrFail($this->locationId);
         $location->delete();
 
         $this->clearForm();
@@ -154,7 +159,7 @@ class MyTest extends Component
     }
 
     public function findLocationById($id){
-        $location = Marker::findOrFail($id);
+        $location = Locations::findOrFail($id);
 
         $this->locationId = $id;
         $this->long = $location->long;
@@ -164,7 +169,7 @@ class MyTest extends Component
     }
 
     public function clustering(){
-        $locations_asc_array = Marker::select('lat','long')->get()->toArray();
+        $locations_asc_array = Locations::select('lat','long')->get()->toArray();
         $day = 3;
         $locations = [];
         // deklar buat array
@@ -175,13 +180,19 @@ class MyTest extends Component
         $kMeans = new KMeans($day);
         $test=$kMeans->cluster($locations);
 
-        var_dump($test);
+        // store $test variable to label in UserPlan table
+        $user_plan = UserPlan::where('user_id', Auth::id())->first();
+        $user_plan->label = json_encode($test);
+        $user_plan->save();
+
+        // return redirect();
+        // UserPlan::c
 
 
         
 
 
-        // return view('home',compact('day','locations_json'));
+        return view('content.plan');
 
         
 

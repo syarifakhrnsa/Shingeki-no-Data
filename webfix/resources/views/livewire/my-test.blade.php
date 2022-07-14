@@ -1,18 +1,17 @@
 
 <div>
-    <div class="row justify-content-center">
+    <div class="row ">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-dark text-white">Maps</div>
                 <div wire:ignore id="map" style='width: 100%; height: 80vh;' ></div>
-                <!-- <pre wire:ignore id="info"></pre> -->                
             </div>
         </div>
         <div class="col-sm-4">
             <div class="card">
                 <div class="card-header bg-dark text-white">
                    <div class="d-flex justify-content-between align-items-center">
-                       <span>Form</span>
+                       <span>Locations</span>
                        @if($isEdit)
                        <button wire:click="clearForm" class="btn btn-success active">New Location</button>
                        @endif
@@ -23,7 +22,7 @@
                         wire:submit.prevent="update"
                         @else
                         wire:submit.prevent="store"
-                        @endif
+                        @endif 
                     >
                         <div class="row">
                             <div class="col-sm-6">
@@ -53,9 +52,15 @@
                             <label class="text-white">Name of location</label>
                              @error('title') <small class="text-danger">{{$message}}</small>@enderror
                         </div>
+                        <div class="form-group">
+                            <label class="text-white">plan</label>
+                            <input type="text" wire:model="plan" class="form-control dark-input" />
+                            <label class="text-white">Name of location</label>
+                             @error('plan') <small class="text-danger">{{$message}}</small>@enderror
+                        </div>
                
                         <div class="form-group">
-                            <button type="submit" class="btn active btn-{{$isEdit ? 'success text-white' : 'primary'}} btn-block">{{$isEdit ? 'Update Location' : 'Submit Location'}}</button>
+                            <button type="submit" class="btn active btn-{{$isEdit ? 'success text-white' : 'primary'}} btn-block">{{$isEdit ? 'Update Location' : 'Add Location'}}</button>
                             @if($isEdit)
                             <button wire:click="deleteLocationById" type="button" class="btn btn-danger active btn-block">Delete Location</button>
                             @endif
@@ -65,6 +70,7 @@
             </div>
         </div>  
     </div>
+</div>
 </div>
 
 
@@ -98,12 +104,13 @@
 
             geojson.features.forEach(function (marker) {
                 const {geometry, properties} = marker
-                const {iconSize, locationId, title} = properties
+                const {iconSize, locationId, title,plan} = properties
 
                 let el = document.createElement('div');
                 el.className = 'marker' + locationId;
                 el.id = locationId;
                 el.style.backgroundImage = 'url({{asset("image/car2.png")}})';
+                el.style.backgroundcolor = 'red';
                 el.style.backgroundSize = 'cover';
                 el.style.width = iconSize[0] + 'px';
                 el.style.height = iconSize[1] + 'px';
@@ -131,25 +138,24 @@
                     @this.findLocationById(locationId)
                 }); 
             
-                new mapboxgl.Marker(el)
-                .setLngLat(geometry.coordinates)
-                .setPopup(popup)
-                .addTo(map);
+                
 
                 
                 if(title == '1'){
-                    var marker = new mapboxgl.Marker({
-                        color: 'blue'
-                    })
-                    marker.setLngLat(geometry.coordinates)
-                    marker.addTo(map)}
+                    new mapboxgl.Marker({el,color:"orange"})
+                    .setLngLat(geometry.coordinates)
+                    .addTo(map)}
                 
                 if(title == '2'){
-                    var marker = new mapboxgl.Marker({
-                        color: '#32a852'
-                    })
-                    marker.setLngLat(geometry.coordinates)
-                    marker.addTo(map)}
+                     new mapboxgl.Marker({el,color:"red"})
+                    .setLngLat(geometry.coordinates)
+                    .addTo(map)}
+                else{
+                    new mapboxgl.Marker(el)
+                .setLngLat(geometry.coordinates)
+                .setPopup(popup)
+                .addTo(map);
+                }
             });
         }
 

@@ -19,7 +19,8 @@
     <link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
 
-
+    {{-- icon --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/fontawesome.min.css">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -85,10 +86,11 @@
         </nav>
 
         <main class="py-4 vh-100" style="background-color: #454647">
-            @yield('content')
+            
 
             <div class="container-fluid" style="background-color: #454647">
                  {{isset($slot) ? $slot : null}}
+                 @yield('content')
             </div>   
         </main>
     </div>
