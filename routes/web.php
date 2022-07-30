@@ -20,3 +20,4 @@ Route::post('/storeplan', [PlanController::class,'storeNewPlan'])->name('storepl
 
 // myplancontroller
 Route::get('/toMap/{id}', [PlanController::class,'toMap'])->name('toMap');
+

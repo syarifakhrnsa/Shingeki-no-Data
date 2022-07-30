@@ -27,11 +27,22 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @livewireStyles
+    
 </head>
 <body>
     <div>
-        <nav class="navbar navbar-expand-md  shadow-sm">
+        <nav class="navbar navbar-expand-md shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                    ODiGA?
@@ -85,13 +96,8 @@
             </div>
         </nav>
 
-        <main class="py-4 vh-100" style="background-color: #454647">
-            
-
-            <div class="container-fluid" style="background-color: #454647">
-                 {{isset($slot) ? $slot : null}}
-                 @yield('content')
-            </div>   
+        <main class="py-4 vh-100" style="background-color: white;">
+            @yield('content')
         </main>
     </div>
     @livewireScripts
