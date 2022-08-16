@@ -17,10 +17,25 @@ class PlanController extends Controller
     public $geoJson; 
     public $isEdit = false;
 
+    public function allPlans()
+    {
+        $plans = UserPlan::where('user_id', Auth::user()->id)->orderBy('plan_id', 'asc')->get();
+        $user = Auth::user();
+        return view('content.plan', compact('plans'));
+    }
 
+    public function newPlan(){
+        $data = request()->validate([
+            'plan_name' => 'required',
+            'date' => 'required',
+            'duration' => 'required',
+        ]);
+        $data['user_id'] = Auth::user()->id;
+        UserPlan::create($data);
+        return redirect('/plan');
+    }
 
     private function getLocations($id) {
-
         // $plan = UserPlan::find
         $locations = Locations::where('plan_id', $id)->get();
 
@@ -76,24 +91,6 @@ class PlanController extends Controller
         $this->isEdit = false;
     }
 
-    public function allPlans()
-    {
-        $plans = UserPlan::where('user_id', Auth::user()->id)->orderBy('plan_id', 'asc')->get();
-        $user = Auth::user();
-        return view('content.plan', compact('plans'));
-    }
-
-    public function newPlan(){
-        $data = request()->validate([
-            'plan_name' => 'required',
-            'date' => 'required',
-            'duration' => 'required',
-        ]);
-        $data['user_id'] = Auth::user()->id;
-        UserPlan::create($data);
-        return redirect('/plan');
-    }
-
     public function toMap($id){
         
         $plan = UserPlan::find($id);
@@ -104,7 +101,6 @@ class PlanController extends Controller
 
     public function store($id){  
 
-        
        $this->validate(request(), [
             'title' => 'required',
             'long' => 'required',
