@@ -13,10 +13,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/map', MyTest::class)->name('test');
-Route::get('/test', [MyTest::class,'clustering']);
-Route::get('/plan', [PlanController::class,'allPlans']);
-Route::post('/newplan', [PlanController::class,'newPlan'])->name('newplan');
+
+
+// auth only
+Route::middleware('auth')->group(function () {
+    Route::get('/map', MyTest::class)->name('test');
+    Route::get('/test', [MyTest::class,'clustering']);
+    Route::get('/plan', [PlanController::class,'allPlans']);
+    Route::post('/newplan', [PlanController::class,'newPlan'])->name('newplan');
+});
 
 // myplancontroller
 Route::get('/toMap/{id}', [PlanController::class,'toMap'])->name('toMap');
