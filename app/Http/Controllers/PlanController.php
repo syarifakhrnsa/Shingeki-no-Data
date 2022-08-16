@@ -35,6 +35,18 @@ class PlanController extends Controller
         return redirect('/plan');
     }
 
+    public function deletePlan($id){
+        UserPlan::where('plan_id', $id)->delete();
+        return redirect('/plan');
+    }
+
+    public function loadMap(){
+        $planid = request()->plan_id;
+        $this->getLocations($planid);
+        $isEdit = true;
+        return view('livewire.my-test');
+    }
+
     private function getLocations($id) {
         // $plan = UserPlan::find
         $locations = Locations::where('plan_id', $id)->get();
@@ -91,13 +103,7 @@ class PlanController extends Controller
         $this->isEdit = false;
     }
 
-    public function toMap($id){
-        
-        $plan = UserPlan::find($id);
-        $this->getLocations($plan->id);
-        $this->isEdit = false;
-        return view('livewire.my-test');
-    }
+
 
     public function store($id){  
 

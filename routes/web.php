@@ -12,8 +12,18 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+//blog
+Route::get('/blog', function () {
+    return view('blog/blog');
+});
+Route::get('/blog/1', function () {
+    return view('blog/blog1');
+});Route::get('/blog/2', function () {
+    return view('blog/blog2');
+});
+Route::get('/blog/3', function () {
+    return view('blog/blog3');
+});
 
 // auth only
 Route::middleware('auth')->group(function () {
@@ -21,8 +31,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/test', [MyTest::class,'clustering']);
     Route::get('/plan', [PlanController::class,'allPlans']);
     Route::post('/newplan', [PlanController::class,'newPlan'])->name('newplan');
+    Route::get('/deleteplan/{id}', [PlanController::class,'deletePlan'])->name('deleteplan');
+    Route::get('/map/{plan_id}', [PlanController::class,'loadMap'])->name('loadMap');
 });
 
 // myplancontroller
-Route::get('/toMap/{id}', [PlanController::class,'toMap'])->name('toMap');
+
 

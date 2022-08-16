@@ -24,7 +24,7 @@
                             <div class="mb-3 mb-md-0">
                                 <div class="mb-3 mb-md-0" style="height: 47px;">
                                     <div class="form-group">
-                                        <input type="text" class="form-control p-4" placeholder="Plan Name" data-target="#planname" name="plan_name"/>
+                                        <input type="text" class="form-control p-4" placeholder="Plan Name" data-target="#planname" name="plan_name" autocomplete="false"/>
                                     </div>
                                 </div>
                             </div>
@@ -32,13 +32,13 @@
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
                                 <div class="date" id="date1" data-target-input="nearest">
-                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Date" data-target="#date1" data-toggle="datetimepicker" name="date"/>
+                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Date" data-target="#date1" data-toggle="datetimepicker" name="date" autocomplete="false"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
-                                <select class="custom-select px-4" style="height: 47px;" name="duration">
+                                <select class="custom-select px-4" style="height: 47px;" name="duration" >
                                     <option selected>Duration</option>
                                     <option value="1">1 Day</option>
                                     <option value="2">2 Days</option>
@@ -70,16 +70,31 @@
                     <th>Date</th>
                     <th>Duration</th>
                     <th>Created at</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                {{-- if there is no plan, show "there is no plan available" --}}
+                @if(count($plans) == 0)
+                    <tr>
+                        <td colspan="5" class="text-center">There is no plan available</td>
+                    </tr>
+                @endif
                 @foreach ($plans as $plan)
                 <tr>
                 <td>{{$plan->plan_name}}</td>
                 <td>{{$plan->date}}</td>
-                <td>{{$plan->duration}}</td>
+                <td>{{$plan->duration}}
+                @if ($plan->duration == 1)
+                    {{'Day'}}
+                @else
+                    {{'Days'}}
+                @endif 
+                </td>
                 <td>{{$plan->created_at}}</td>
+                <td>
+                    <a href="{{route('loadMap', $plan->plan_id)}}" class="btn btn-primary">Open</a>
+                    <a href="{{route('deleteplan', $plan->plan_id)}}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
+                </td>
                 </tr>
                 @endforeach
             </tbody>
