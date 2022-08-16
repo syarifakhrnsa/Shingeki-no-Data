@@ -9,6 +9,8 @@
     </div>
 </div>
 <!-- Booking Start -->
+<form action="{{route('newplan')}}" method="POST">
+@csrf
 <div class="container">
     <div class="container">
         <div class="bg-light shadow" style="padding: 30px; z-index: 3; position: relative;">
@@ -16,10 +18,13 @@
                 <div class="col-md-10">
                     <div class="row">
                         <div class="col-md-3">
+                            <h4 class="mb-0">Make a Whole New Plan</h4>
+                        </div>
+                        <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
                                 <div class="mb-3 mb-md-0" style="height: 47px;">
                                     <div class="form-group">
-                                        <input type="text" class="form-control p-4" placeholder="Plan Name" data-target="#planname"/>
+                                        <input type="text" class="form-control p-4" placeholder="Plan Name" data-target="#planname" name="plan_name"/>
                                     </div>
                                 </div>
                             </div>
@@ -27,61 +32,54 @@
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
                                 <div class="date" id="date1" data-target-input="nearest">
-                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Depart Date" data-target="#date1" data-toggle="datetimepicker"/>
+                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Date" data-target="#date1" data-toggle="datetimepicker" name="date"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
-                                <div class="date" id="date2" data-target-input="nearest">
-                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Return Date" data-target="#date2" data-toggle="datetimepicker"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3 mb-md-0">
-                                <select class="custom-select px-4" style="height: 47px;">
+                                <select class="custom-select px-4" style="height: 47px;" name="duration">
                                     <option selected>Duration</option>
-                                    <option value="1">Duration 1</option>
-                                    <option value="2">Duration 1</option>
-                                    <option value="3">Duration 1</option>
+                                    <option value="1">1 Day</option>
+                                    <option value="2">2 Days</option>
+                                    <option value="3">3 Days</option>
+                                    <option value="4">4 Days</option>
+                                    <option value="5">5 Days</option>
+                                    <option value="6">6 Days</option>
+                                    <option value="7">7 Days</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <form action="{{route('storeplan')}}" method="POST">
-                        @csrf
-                        <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">New Plan</button>
-                </div>
+            <div class="col-md-2">
+                <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -12px;">New Plan</button>
             </div>
         </div>
     </div>
 </div>
+</div>
+</form>
 <!-- Booking End -->
     <div class="card shadow plans" style="padding: 50px; margin:100px">
         <div class="card-body " style="height: 550px;overflow: scroll;" >
             <table class="table">
             <thead>
                 <tr>
-                    <th>No</th>
-                    <th>Name</th>
-                    <th>Depart Date</th>
-                    <th>Return Date</th>
+                    <th>Plan Name</th>
+                    <th>Date</th>
                     <th>Duration</th>
                     <th>Created at</th>
                 </tr>
             </thead>
             <tbody>
+                {{-- if there is no plan, show "there is no plan available" --}}
                 @foreach ($plans as $plan)
                 <tr>
-                <td>{{$plan->id}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><a href="{{route('toMap',$plan->id)}}">{{$plan->created_at}}</a></td>
+                <td>{{$plan->plan_name}}</td>
+                <td>{{$plan->date}}</td>
+                <td>{{$plan->duration}}</td>
+                <td>{{$plan->created_at}}</td>
                 </tr>
                 @endforeach
             </tbody>

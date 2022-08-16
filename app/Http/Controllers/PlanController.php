@@ -78,21 +78,20 @@ class PlanController extends Controller
 
     public function allPlans()
     {
-        $plans = UserPlan::orderBy('id', 'desc')->get();
+        $plans = UserPlan::where('user_id', Auth::user()->id)->orderBy('plan_id', 'asc')->get();
+        $user = Auth::user();
         return view('content.plan', compact('plans'));
     }
 
-    public function storeNewPlan(){
-        $plans = UserPlan::orderBy('id', 'desc')->get();
-        $user = Auth::user();
-        $plan = new UserPlan();
-        $plan->user_id = $user->id;
-        $plan->save();
-
-        // dd($plan);
-        // return redirect();
-
-        return view('content.plan', compact('plans'));
+    public function newPlan(){
+        $data = request()->validate([
+            'plan_name' => 'required',
+            'date' => 'required',
+            'duration' => 'required',
+        ]);
+        $data['user_id'] = Auth::user()->id;
+        UserPlan::create($data);
+        return redirect('/plan');
     }
 
     public function toMap($id){

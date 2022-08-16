@@ -42,6 +42,8 @@
 
 
 <!-- Booking Start -->
+<form action="{{route('newplan')}}" method="POST">
+@csrf
 <div class="container-fluid booking mt-5 pb-5">
     <div class="container pb-5">
         <div class="bg-light shadow" style="padding: 30px;">
@@ -49,10 +51,13 @@
                 <div class="col-md-10">
                     <div class="row">
                         <div class="col-md-3">
+                            <h4 class="mb-0">Make a Whole New Plan</h4>
+                        </div>
+                        <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
                                 <div class="mb-3 mb-md-0" style="height: 47px;">
                                     <div class="form-group">
-                                        <input type="text" class="form-control p-4" placeholder="Plan Name" data-target="#planname"/>
+                                        <input type="text" class="form-control p-4" placeholder="Plan Name" name="plan_name"/>
                                     </div>
                                 </div>
                             </div>
@@ -60,36 +65,34 @@
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
                                 <div class="date" id="date1" data-target-input="nearest">
-                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Depart Date" data-target="#date1" data-toggle="datetimepicker"/>
+                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Date" data-target="#date1" data-toggle="datetimepicker" name="date"/>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
-                                <div class="date" id="date2" data-target-input="nearest">
-                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Return Date" data-target="#date2" data-toggle="datetimepicker"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="mb-3 mb-md-0">
-                                <select class="custom-select px-4" style="height: 47px;">
+                                <select class="custom-select px-4" style="height: 47px;" name="duration">
                                     <option selected>Duration</option>
-                                    <option value="1">Duration 1</option>
-                                    <option value="2">Duration 1</option>
-                                    <option value="3">Duration 1</option>
+                                    <option value="1">1 Day</option>
+                                    <option value="2">2 Days</option>
+                                    <option value="3">3 Days</option>
+                                    <option value="4">4 Days</option>
+                                    <option value="5">5 Days</option>
+                                    <option value="6">6 Days</option>
+                                    <option value="7">7 Days</option>
                                 </select>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -2px;">New Plan</button>
+                        <button class="btn btn-primary btn-block" type="submit" style="height: 47px; margin-top: -12px;">New Plan</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</form>
 <!-- Booking End -->
 
 <!-- Feature Start -->
@@ -147,10 +150,8 @@
                     <div class="team-img position-relative overflow-hidden">
                         <img class="img-fluid w-100" src="{{ asset('image/team-1.jpg') }}" alt="">
                         <div class="team-social">
-                            <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-twitter"></i></a>
-                            <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-facebook-f"></i></a>
-                            <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-instagram"></i></a>
-                            <a class="btn btn-outline-primary btn-square" href=""><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-outline-primary btn-square" href="https://www.instagram.com/naafi05"><i class="fab fa-instagram"></i></a>
+                            <a class="btn btn-outline-primary btn-square" href=https://www.linkedin.com/in/nafimulyo/"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="text-center py-4">

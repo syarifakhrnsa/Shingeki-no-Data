@@ -14,11 +14,13 @@ class CreateUserPlansTable extends Migration
     public function up()
     {
         Schema::create('user_plans', function (Blueprint $table) {
-            $table->id();
+            $table->id('plan_id');
             $table->foreignId('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('plan_name')->nullable();
+            $table->string('date')->nullable();
             $table->longText('label')->nullable();
-            $table->string('day_count')->nullable();
-            $table->string('day_now')->nullable();
+            $table->tinyInteger('duration')->nullable();
             $table->timestamps();
         });
     }
