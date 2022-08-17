@@ -7,12 +7,16 @@ use App\Models\UserPlan;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
+    return redirect('/home');
+});
+
+Route::get('/home', function () {
     return view('home');
 });
 
 Auth::routes();
 
-//blog
+//
 Route::get('/blog', function () {
     return view('blog/blog');
 });

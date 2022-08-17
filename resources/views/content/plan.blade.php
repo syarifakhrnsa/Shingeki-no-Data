@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+<div style="background-color: white">
 <div class="container-fluid py-4">
     <div class="container pt-5 pb-3">
         <div class="">
@@ -101,6 +101,13 @@
             </table> 
         </div>
     </div>
+    <div class="text-center" style="background-color: white">
+        <a href="{{url('/')}}" class="btn btn-primary btn-lg">
+            <i class="fa fa-home"></i>
+            Back to Home
+        </a>
+    </div>
+</div>
 <!-- JavaScript Libraries -->
 <script src="{{ asset('https://code.jquery.com/jquery-3.4.1.min.js') }}"></script>
 <script src="{{ asset('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js') }}"></script>

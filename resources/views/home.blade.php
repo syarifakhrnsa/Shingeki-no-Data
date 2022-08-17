@@ -224,7 +224,7 @@
                             <span class="text-primary px-2">|</span>
                             <a class="text-primary text-uppercase text-decoration-none" href="/blog/1">Tours & Travel</a>
                         </div>
-                        <a class="h5 m-0 text-decoration-none" href="/blog/1php artisan ">Blog 1 : justo sea kasd lorem clita justo diam amet</a>
+                        <a class="h5 m-0 text-decoration-none" href="/blog/1">Blog 1 : justo sea kasd lorem clita justo diam amet</a>
                     </div>
                 </div>
             </div>
