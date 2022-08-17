@@ -220,11 +220,11 @@
                     </div>
                     <div class="bg-white p-4">
                         <div class="d-flex mb-2">
-                            <a class="text-primary text-uppercase text-decoration-none" href="">Admin</a>
+                            <a class="text-primary text-uppercase text-decoration-none" href="/blog/1">Admin</a>
                             <span class="text-primary px-2">|</span>
-                            <a class="text-primary text-uppercase text-decoration-none" href="">Tours & Travel</a>
+                            <a class="text-primary text-uppercase text-decoration-none" href="/blog/1">Tours & Travel</a>
                         </div>
-                        <a class="h5 m-0 text-decoration-none" href="">Dolor justo sea kasd lorem clita justo diam amet</a>
+                        <a class="h5 m-0 text-decoration-none" href="/blog/1php artisan ">Blog 1 : justo sea kasd lorem clita justo diam amet</a>
                     </div>
                 </div>
             </div>
@@ -239,11 +239,11 @@
                     </div>
                     <div class="bg-white p-4">
                         <div class="d-flex mb-2">
-                            <a class="text-primary text-uppercase text-decoration-none" href="">Admin</a>
+                            <a class="text-primary text-uppercase text-decoration-none" href="/blog/2">Admin</a>
                             <span class="text-primary px-2">|</span>
-                            <a class="text-primary text-uppercase text-decoration-none" href="">Tours & Travel</a>
+                            <a class="text-primary text-uppercase text-decoration-none" href="/blog/2">Tours & Travel</a>
                         </div>
-                        <a class="h5 m-0 text-decoration-none" href="">Dolor justo sea kasd lorem clita justo diam amet</a>
+                        <a class="h5 m-0 text-decoration-none" href="/blog/2">Blog 2 : Dolor justo sea kasd lorem clita justo diam amet</a>
                     </div>
                 </div>
             </div>
@@ -258,11 +258,11 @@
                     </div>
                     <div class="bg-white p-4">
                         <div class="d-flex mb-2">
-                            <a class="text-primary text-uppercase text-decoration-none" href="">Admin</a>
+                            <a class="text-primary text-uppercase text-decoration-none" href="/blog/3"">Admin</a>
                             <span class="text-primary px-2">|</span>
-                            <a class="text-primary text-uppercase text-decoration-none" href="">Tours & Travel</a>
+                            <a class="text-primary text-uppercase text-decoration-none" href="/blog/3"">Tours & Travel</a>
                         </div>
-                        <a class="h5 m-0 text-decoration-none" href="">Dolor justo sea kasd lorem clita justo diam amet</a>
+                        <a class="h5 m-0 text-decoration-none" href="/blog/3">Blog 3 : Dolor justo sea kasd lorem clita justo diam amet</a>
                     </div>
                 </div>
             </div>
