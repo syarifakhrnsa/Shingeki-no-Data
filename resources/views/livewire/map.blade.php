@@ -5,7 +5,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header bg-dark text-white">Maps</div>
-                <div wire:ignore id="map" style='width: 100%; height: 80vh;' ></div>
+                {{-- <div wire:ignore id="map" style='width: 100%; height: 80vh;' ></div> --}}
             </div>
         </div>
         <div class="col-sm-4">
@@ -13,37 +13,45 @@
                 <div class="card-header bg-dark text-white">
                    <div class="d-flex justify-content-between align-items-center">
                        <span>Locations</span>
-                       @if($isEdit)
-                       <button wire:click="clearForm" class="btn btn-success active">New Location</button>
-                       @endif
+                       {{-- @if($isEdit) --}}
+                       <button 
+                       {{-- wire:click="clearForm"  --}}
+                       class="btn btn-success active">New Location</button>
+                       {{-- @endif --}}
                    </div>
                 </div>
                 <div class="card-body" style="background-color: #454647">
-                    <form @if($isEdit)
+                    <form 
+                        {{-- @if($isEdit)
                         wire:submit.prevent="update"
                         @else
                         wire:submit.prevent="store"
-                        @endif 
+                        @endif  --}}
                     >
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="text-white">Longtitude</label>
-                                    <input type="text" wire:model="long" class="form-control dark-input" 
-                                        {{$isEdit ? 'disabled' : null}}              
+                                    <input type="text" 
+                                    {{-- wire:model="long" --}}
+                                     class="form-control dark-input" 
+                                        {{-- {{$isEdit ? 'disabled' : null}}               --}}
                                     />
-                                    <label class="text-white">Tell use longtitude coordinate</label>
-                                     @error('long') <small class="text-danger">{{$message}}</small>@enderror
+                                    <label class="text-white">
+                                        Tell use longtitude coordinate
+                                    </label>
+                                     {{-- @error('long') <small class="text-danger">{{$message}}</small>
+                                     @enderror --}}
                                 </div>                   
                             </div>
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <label class="text-white">Latitude</label>
                                     <input type="text" wire:model="lat" class="form-control dark-input" 
-                                        {{$isEdit ? 'disabled' : null}} 
+                                        {{-- {{$isEdit ? 'disabled' : null}}  --}}
                                     />
                                     <label class="text-white">Tell use latitude coordinate</label>
-                                     @error('lat') <small class="text-danger">{{$message}}</small>@enderror
+                                     {{-- @error('lat') <small class="text-danger">{{$message}}</small>@enderror --}}
                                 </div>
                             </div>
                         </div>
@@ -51,23 +59,54 @@
                             <label class="text-white">Title</label>
                             <input type="text" wire:model="title" class="form-control dark-input" />
                             <label class="text-white">Name of location</label>
-                             @error('title') <small class="text-danger">{{$message}}</small>@enderror
-                        </div>
-                        <div class="form-group">
-                            <label class="text-white">plan</label>
-                            <input type="text" wire:model="plan" class="form-control dark-input" />
-                            <label class="text-white">Name of location</label>
-                             @error('plan') <small class="text-danger">{{$message}}</small>@enderror
+                             {{-- @error('title') <small class="text-danger">{{$message}}</small>@enderror --}}
                         </div>
                
                         <div class="form-group">
-                            <button type="submit" class="btn active btn-{{$isEdit ? 'success text-white' : 'primary'}} btn-block">{{$isEdit ? 'Update Location' : 'Add Location'}}</button>
-                            @if($isEdit)
+                            <button type="submit" 
+                            {{-- class="btn active btn-{{$isEdit ? 'success text-white' : 'primary'}} btn-block" --}}
+                            >
+                            {{-- {{$isEdit ? 'Update Location' : 'Add Location'}} --}}
+                            </button>
+                            {{-- @if($isEdit)
                             <button wire:click="deleteLocationById" type="button" class="btn btn-danger active btn-block">Delete Location</button>
-                            @endif
+                            @endif --}}
                         </div>
                     </form>
                 </div>            
+            </div>
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Latitude</th>
+                                    <th>Longitude</th>
+                                    <th>Label</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if(count($locations) == 0)
+                                    <tr>
+                                        <td colspan="5" class="text-center">There is no location available</td>
+                                    </tr>
+                                @endif
+                                @foreach ($locations as $location)
+                                <tr>
+                                    <td>{{$location->title}}</td>
+                                    <td>{{$location->long}}</td>
+                                    <td>{{$location->lat}}</td>
+                                    <td>{{$dayNumber}}</td>
+                                    <td>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table> 
+                    </div>
+                </div>
             </div>
         </div>  
     </div>

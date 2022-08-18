@@ -12,7 +12,7 @@ use Livewire\Component;
 use Faker\Core\Coordinates;
 use Phpml\Clustering\KMeans;
 
-class MyTest extends Component
+class Map extends Component
 {
     use WithFileUploads;
     
@@ -22,13 +22,15 @@ class MyTest extends Component
     public $plan ; 
     public $isEdit = false;
 
+
+
     public function getLocations() {
 
         // $plan = UserPlan::all();
         // $this->plan = Locations::where('plan_id', mount()->id)->get();
         // $locations = Locations::where('plan_id', $this->plan)->get();
-
-        $locations = Locations::orderBy('id', 'desc')->get();
+        
+        $locations = Locations::where('plan_id', $this->plan)->orderBy('title', 'desc')->get();
         // $locations = Locations::where('plan_id', 49)->get();
 
 
@@ -83,7 +85,7 @@ class MyTest extends Component
         // pass $id to this function
         // $this->getLocations($id);
         $this->getLocations();
-        return view('livewire.my-test');
+        return view('livewire.map');
     }
 
     // public function previewImage(){
@@ -172,17 +174,17 @@ class MyTest extends Component
         // deklar buat array
         foreach($locations_asc_array as $array) {
         array_push($locations, array_values($array));
-         };
+    };
 
-        $kMeans = new KMeans($day);
-        $test=$kMeans->cluster($locations);
+   $kMeans = new KMeans($day);
+   $test=$kMeans->cluster($locations);
 
-        // store $test variable to label in UserPlan table
-        $user_plan = UserPlan::where('user_id', Auth::id())->first();
-        $user_plan->label = json_encode($test);
-        $user_plan->save();
+   // store $test variable to label in UserPlan table
+   $user_plan = UserPlan::where('user_id', Auth::id())->first();
+   $user_plan->label = json_encode($test);
+   $user_plan->save();
 
-        // return redirect();
+   // return redirect();
         // UserPlan::c
 
 
