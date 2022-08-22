@@ -92,7 +92,7 @@
                 </td>
                 <td>{{$plan->created_at}}</td>
                 <td>
-                    <a href="{{route('loadMap', $plan->plan_id)}}" class="btn btn-primary">Open</a>
+                    <a href="{{route('map', $plan->plan_id)}}" class="btn btn-primary">Open</a>
                     <a href="{{route('deleteplan', $plan->plan_id)}}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
                 </td>
                 </tr>

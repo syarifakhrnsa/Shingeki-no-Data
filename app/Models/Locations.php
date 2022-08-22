@@ -8,5 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Locations extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $guarded = [];
 }

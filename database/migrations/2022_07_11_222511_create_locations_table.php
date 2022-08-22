@@ -14,13 +14,13 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->id();
+            $table->id('id');
             $table->unsignedBigInteger('plan_id')->nullable();
             $table->foreign('plan_id')->references('plan_id')->on('user_plans');
             $table->string('title');
             $table->string('long');
             $table->string('lat');
-            $table->timestamps();
+
         });
     }
 
@@ -34,3 +34,7 @@ class CreateLocationsTable extends Migration
         Schema::dropIfExists('locations');
     }
 }
+
+
+        
+    

@@ -17,10 +17,10 @@ class CreateUserPlansTable extends Migration
             $table->id('plan_id');
             $table->foreignId('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('plan_name')->nullable();
-            $table->string('date')->nullable();
+            $table->string('plan_name');
+            $table->string('date');
             $table->longText('label')->nullable();
-            $table->tinyInteger('duration')->nullable();
+            $table->tinyInteger('duration');
             $table->timestamps();
         });
     }
