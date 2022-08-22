@@ -20,6 +20,7 @@ class CreateLocationsTable extends Migration
             $table->string('title');
             $table->string('long');
             $table->string('lat');
+            $table->tinyInteger('label')->nullable();
 
         });
     }

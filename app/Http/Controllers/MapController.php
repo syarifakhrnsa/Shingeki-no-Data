@@ -46,73 +46,53 @@ class MapController extends Controller
         $data['plan_id'] = $id;
 
         Locations::create($data);
-        return redirect('/map/1');
+        $locations = Locations::where('plan_id', $id)->orderBy('title', 'desc')->get();
+        foreach($locations as $location) {
+            $location->label = null;
+            $location->save();
+        }
+
+        return redirect('/map/' . $id);
     }
 
-    public function deleteLocation($locationid) {
+    public function deleteLocation($locationid, $planid) {
         Locations::where('id', $locationid)->delete();
-        loadMap($this->plan_id);
+
+        $locations = Locations::where('plan_id', $planid)->orderBy('title', 'desc')->get();
+        foreach($locations as $location) {
+            $location->label = null;
+            $location->save();
+        }
+
+        return redirect('/map/' . $planid);
     }
 
     public function kmeans($id) {
         $duration = request()->duration;
-        $locations_asc_array = Locations::select('lat','long')->where('plan_id', $id)->get()->toArray();
-        $locations = [];
-        foreach($locations_asc_array as $array) {
-            array_push($locations, array_values($array));
+        $locationsAssoc = Locations::select('lat','long')->where('plan_id', $id)->get()->toArray();
+        $locationsValue = [];
+        $locations = Locations::where('plan_id', $id)->get();
+        foreach($locationsAssoc as $array) {
+            array_push($locationsValue, array_values($array));
         }
 
         $kMeans = new KMeans($duration);
-        $cluster = $kMeans->cluster($locations);
-
-        $plan = UserPlan::where('plan_name', 'Plan 1')->update(['label' => json_encode($cluster), 'duration' => $duration]);                         
-        return redirect('/map/1');
-    }
-
-
-       function searchLabel(){
-        $locations = $this->locations;
-        $labels = $this->labels;
-        // if labels is not null
-        if($labels != null){
-            $labelsDecoded = json_decode($labels);
-            foreach($labelsDecoded as $label){
-                foreach($labels as $coordinate){
-                    if($coordinate[0] == $locations->long && $coordinate[1] == $locations->lat)  {
-                        return $label;
+        $cluster = $kMeans->cluster($locationsValue);
+        $label_index = 0;
+        $plan = UserPlan::where('plan_id', $id)->update(['duration' => $duration]);
+        
+        foreach($cluster as $label){
+            foreach($label as $coordinate){
+                foreach($locations as $location) {
+                    if($coordinate[0] == $location->lat && $coordinate[1] == $location->long)  {
+                        $location->label = $label_index;
+                        $location->save();
                     }
                 }
             }
+            $label_index++;
         }
-    } 
+
+        return redirect('/map/' . $id);
+    }
 }
-
-
-
-
-        // foreach($locations as $location){
-        //     $customLocation[] = [
-        //         'type' => 'Feature',
-        //         'geometry' => [
-        //             'coordinates' => [
-        //                 $location->long, $location->lat
-        //             ],
-        //             'type' => 'Point'
-        //         ],
-        //         'properties' => [
-        //             'iconSize' => [50,50],
-        //             'locationId' => $location->id,
-        //             'title' => $location->title,
-        //             'label' => $this->searchLabel(),
-        //         ]
-        //     ];
-        // };
-
-        // $geoLocations = [
-        //     'type' => 'FeatureCollection',
-        //     'features' => $customLocation
-        // ];  
-        
-        // $geoJson = collect($geoLocations)->toJson();
-        // $this->geoJson = $geoJson;
-    
