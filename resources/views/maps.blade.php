@@ -104,7 +104,7 @@
                                 <td>{{$location->title}}</td>
                                 <td>{{$location->long}}</td>
                                 <td>{{$location->lat}}</td>
-                                <td>2</td>
+                                <td>{{$location->label}}</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -144,7 +144,26 @@
     @foreach ($locations as $location)
         const marker{{$location->id}} = new mapboxgl.Marker({
             draggable: true,
-            color: '#ff0000'
+            color: 
+            @if($location->label == '1')
+                '#ff0000'
+            @elseif($location->label == '2')
+                '#00ff00'
+            @elseif($location->label == '3')
+                '#ff00ff'
+            @elseif($location->label == '4')
+                '#ffff00'
+            @elseif($location->label == '5')
+                '#ff00ff'
+            @elseif($location->label == '6')
+                '#00ffff'
+            @elseif($location->label == '7')
+                '#000000'
+            @elseif($location->label == '0')
+                '#0000ff'
+            @else
+                '#ffffff'
+            @endif
         })
         .setLngLat([{{$location->long}}, {{$location->lat}}])
         .addTo(map);
