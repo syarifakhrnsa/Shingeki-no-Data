@@ -14,15 +14,15 @@ class MapController extends Controller
     public $isEdit;
     public $geoJson; 
 
-    // return function render wit $id parameter 
-    public function loadMap($id)
+    // return function render wit $plan_id parameter 
+    public function loadMap($plan_id)
     {
         $this->isEdit = false;
-        $this->plan_id = $id;
-        $plan = UserPlan::where('plan_id', $id)->first();
+        $this->plan_id = $plan_id;
+        $plan = UserPlan::where('plan_id', $plan_id)->first();
         
         $this->labels = $plan->labels;
-        $this->locations = Locations::where('plan_id', $id)->orderBy('title', 'desc')->get();
+        $this->locations = Locations::where('plan_id', $plan_id)->orderBy('title', 'desc')->get();
 
         // To pass
         $labels = $this->labels;
@@ -37,41 +37,41 @@ class MapController extends Controller
         return view('maps', compact('locations', 'labels', 'isEdit', 'title', 'plan_id', 'duration'));
     }
 
-    public function addLocation($id) {
+    public function addLocation($plan_id) {
         $data = request()->validate([
             'title' => 'required',
             'long' => 'required',
             'lat' => 'required',
         ]);
-        $data['plan_id'] = $id;
+        $data['plan_id'] = $plan_id;
 
         Locations::create($data);
-        $locations = Locations::where('plan_id', $id)->orderBy('title', 'desc')->get();
+        $locations = Locations::where('plan_id', $plan_id)->orderBy('title', 'desc')->get();
         foreach($locations as $location) {
             $location->label = null;
             $location->save();
         }
 
-        return redirect('/map/' . $id);
+        return redirect('/map/' . $plan_id);
     }
 
-    public function deleteLocation($locationid, $planid) {
-        Locations::where('id', $locationid)->delete();
+    public function deleteLocation($plan_id, $location_id) {
+        Locations::where('id', $location_id)->delete();
+        //get plan id from location id
+        $locations = Locations::where('plan_id', $plan_id)->orderBy('title', 'desc')->get();
 
-        $locations = Locations::where('plan_id', $planid)->orderBy('title', 'desc')->get();
-        foreach($locations as $location) {
+        foreach ( $locations as $location) {
             $location->label = null;
             $location->save();
         }
-
-        return redirect('/map/' . $planid);
+        return redirect('/map/' . $plan_id);
     }
 
-    public function kmeans($id) {
+    public function kmeans($plan_id) {
         $duration = request()->duration;
-        $locationsAssoc = Locations::select('lat','long')->where('plan_id', $id)->get()->toArray();
+        $locationsAssoc = Locations::select('lat','long')->where('plan_id', $plan_id)->get()->toArray();
         $locationsValue = [];
-        $locations = Locations::where('plan_id', $id)->get();
+        $locations = Locations::where('plan_id', $plan_id)->get();
         foreach($locationsAssoc as $array) {
             array_push($locationsValue, array_values($array));
         }
@@ -79,7 +79,7 @@ class MapController extends Controller
         $kMeans = new KMeans($duration);
         $cluster = $kMeans->cluster($locationsValue);
         $label_index = 0;
-        $plan = UserPlan::where('plan_id', $id)->update(['duration' => $duration]);
+        $plan = UserPlan::where('plan_id', $plan_id)->update(['duration' => $duration]);
         
         foreach($cluster as $label){
             foreach($label as $coordinate){
@@ -93,6 +93,6 @@ class MapController extends Controller
             $label_index++;
         }
 
-        return redirect('/map/' . $id);
+        return redirect('/map/' . $plan_id);
     }
 }

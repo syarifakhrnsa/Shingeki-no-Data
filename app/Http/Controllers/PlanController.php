@@ -35,9 +35,9 @@ class PlanController extends Controller
         return redirect('/plan');
     }
 
-    public function deletePlan($id){
-        UserPlan::where('plan_id', $id)->delete();
-        Locations::where('plan_id', $id)->delete();
+    public function deletePlan($plan_id){
+        Locations::where('plan_id', $plan_id)->delete();
+        UserPlan::where('plan_id', $plan_id)->delete();
         return redirect('/plan');
     }
 }

@@ -105,6 +105,9 @@
                                 <td>{{$location->long}}</td>
                                 <td>{{$location->lat}}</td>
                                 <td>{{$location->label}}</td>
+                                <td>
+                                    <a href="{{route('deletelocation', ['plan_id' => $plan_id, 'location_id' => $location->id])}}" onclick="return confirm('Are you sure?')" class="btn btn-danger">Delete</a>
+                                </td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -146,23 +149,23 @@
             draggable: true,
             color: 
             @if($location->label == '1')
-                '#ff0000'
+                '#03a8a0'
             @elseif($location->label == '2')
-                '#00ff00'
+                '#039c4b'
             @elseif($location->label == '3')
-                '#ff00ff'
+                '#66f313'
             @elseif($location->label == '4')
-                '#ffff00'
+                '#fedf17'
             @elseif($location->label == '5')
-                '#ff00ff'
+                '#ff0984'
             @elseif($location->label == '6')
-                '#00ffff'
+                '#21409a'
             @elseif($location->label == '7')
-                '#000000'
+                '#e48873'
             @elseif($location->label == '0')
-                '#0000ff'
+                '#f16623'
             @else
-                '#ffffff'
+                '#c21808'
             @endif
         })
         .setLngLat([{{$location->long}}, {{$location->lat}}])
