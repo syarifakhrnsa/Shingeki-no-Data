@@ -39,7 +39,7 @@
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
                                 <select class="custom-select px-4" style="height: 47px;" name="duration" >
-                                    <option selected>Duration</option>
+                                    <option value="" disabled selected>Duration</option>
                                     <option value="1">1 Day</option>
                                     <option value="2">2 Days</option>
                                     <option value="3">3 Days</option>
@@ -61,7 +61,7 @@
 </div>
 </form>
 <!-- Booking End -->
-    <div class="card shadow plans" style="padding: 50px; margin:100px">
+    <div class="card shadow plans" style="padding: 50px; margin:100px 100px 50px 100px">
         <div class="card-body " style="height: 550px;overflow: scroll;" >
             <table class="table">
             <thead>

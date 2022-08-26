@@ -40,4 +40,6 @@ class PlanController extends Controller
         UserPlan::where('plan_id', $plan_id)->delete();
         return redirect('/plan');
     }
+
+
 }

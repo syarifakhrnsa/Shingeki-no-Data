@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Locations;
 use App\Models\UserPlan;
+use Illuminate\Support\Facades\Auth;
+
 
 use Illuminate\Http\Request;
 use Phpml\Clustering\KMeans;
@@ -22,7 +24,7 @@ class MapController extends Controller
         $plan = UserPlan::where('plan_id', $plan_id)->first();
         
         $this->labels = $plan->labels;
-        $this->locations = Locations::where('plan_id', $plan_id)->orderBy('title', 'desc')->get();
+        $this->locations = Locations::where('plan_id', $plan_id)->orderBy('label', 'desc')->get();
 
         // To pass
         $labels = $this->labels;
@@ -31,10 +33,18 @@ class MapController extends Controller
         $title = $plan->plan_name;
         $plan_id = $this->plan_id;
         $duration = $plan->duration;
-
+        $plan_name = $plan->plan_name;
+        $user_id = $plan->user_id;
         // Labelling
-            
-        return view('maps', compact('locations', 'labels', 'isEdit', 'title', 'plan_id', 'duration'));
+
+        // if auth is not the same as the user who created the plan, then redirect to home page
+        if (Auth::user()->id != $plan->user_id) {
+            return redirect('/');
+        }
+        else {
+            return view('maps', compact('locations', 'labels', 'isEdit', 'title', 'plan_id', 'duration', 'plan_name'));
+        }
+    
     }
 
     public function addLocation($plan_id) {
@@ -60,6 +70,21 @@ class MapController extends Controller
         //get plan id from location id
         $locations = Locations::where('plan_id', $plan_id)->orderBy('title', 'desc')->get();
 
+        foreach ( $locations as $location) {
+            $location->label = null;
+            $location->save();
+        }
+        return redirect('/map/' . $plan_id);
+    }
+
+    public function updateLocation($plan_id, $location_id) {
+        $data = request()->validate([
+            'title' => 'required',
+            'long' => 'required',
+            'lat' => 'required',
+        ]);
+        Locations::where('id', $location_id)->update($data);
+        $locations = Locations::where('plan_id', $plan_id)->orderBy('title', 'desc')->get();
         foreach ( $locations as $location) {
             $location->label = null;
             $location->save();
@@ -96,3 +121,4 @@ class MapController extends Controller
         return redirect('/map/' . $plan_id);
     }
 }
+?>

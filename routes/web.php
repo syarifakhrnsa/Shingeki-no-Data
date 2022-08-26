@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/addlocation/{plan_id}', [MapController::class,'addLocation'])->name('addlocation');
     Route::get('/deletelocation/{plan_id}/{location_id}', [MapController::class,'deleteLocation'])->name('deletelocation');
     Route::post('/kmeans/{plan_id}', [MapController::class,'kmeans'])->name('kmeans');
+    Route::post('/updatelocation/{plan_id}/{location_id}', [MapController::class,'updateLocation'])->name('updatelocation');
 });
 
 // myplancontroller

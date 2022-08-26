@@ -2,7 +2,7 @@
 @section('content')
 
 <!-- Carousel Start -->
-<div class="container-fluid p-0 mt-3">
+<div class="container-fluid" style="padding: 40px 0px 0px 0px;">
     <div id="header-carousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -71,8 +71,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
-                                <select class="custom-select px-4" style="height: 47px;" name="duration">
-                                    <option selected>Duration</option>
+                                <select class="custom-select px-4" style="height: 47px;" name="duration" placeholder="Duration">
+                                    <option value="" disabled selected>Duration</option>
                                     <option value="1">1 Day</option>
                                     <option value="2">2 Days</option>
                                     <option value="3">3 Days</option>
@@ -273,7 +273,7 @@
 
 
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+<div class="container-fluid text-white-50 py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
 </div>
 <!-- Footer End -->
 

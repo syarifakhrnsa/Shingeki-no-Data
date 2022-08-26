@@ -37,12 +37,12 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @livewireStyles
+
     
 </head>
 <body>
     <div>
-        <nav class="navbar navbar-expand-md shadow-sm">
+        <nav class="navbar navbar-expand-md shadow-sm" style="height: 8vh;" id="navbar">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                    ODiGA?
@@ -54,7 +54,12 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="/plan">My Plan</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog">Blog</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -96,11 +101,10 @@
             </div>
         </nav>
 
-        <main class="py-4 vh-100" style="background-color: white;">
+        <main style="background-color: white; height: 92vh;">
             @yield('content')
         </main>
     </div>
-    @livewireScripts
     
     @stack('script')
    
