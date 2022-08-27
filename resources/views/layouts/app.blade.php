@@ -37,6 +37,7 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
 
     
 </head>
@@ -107,6 +108,7 @@
     </div>
     
     @stack('script')
+    @livewireScripts
    
 
 </body>

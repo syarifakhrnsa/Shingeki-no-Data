@@ -5,7 +5,7 @@
     <div class="card" 
     style=
         'position: absolute;
-        top: 100px;
+        top: 85px;
         left: 40px;
         width: 400px'>
         <div class="card-header bg-dark text-white">
@@ -38,7 +38,7 @@
     <div class="card"  
         style=
         'position: absolute;
-        top: 310px;
+        top: 295px;
         left: 40px;
         width: 400px'>
         <div class="card-header bg-dark text-white">
@@ -46,7 +46,7 @@
                 <span>Locations</span>
             </div>
         </div>
-        <div class="card-body" style="background-color: #454647; height: 52vh; overflow-y: scroll;">
+        <div class="card-body" style="background-color: #454647; height: 50vh; overflow-y: scroll;">
             <div id="geocoder" class="geocoder"></div>  
             <form action="{{route('addlocation', $plan_id)}}" method="POST" id="locationControl">
                 @csrf

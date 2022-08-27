@@ -11,19 +11,6 @@ use phpDocumentor\Reflection\Location;
 
 class PlanController extends Controller
 {
-    public $count = 5; 
-    public $locationId,$long,$lat,$title; 
-   
-    public $geoJson; 
-    public $isEdit = false;
-
-    public function allPlans()
-    {
-        $plans = UserPlan::where('user_id', Auth::user()->id)->orderBy('plan_id', 'asc')->get();
-        $user = Auth::user();
-        return view('content.plan', compact('plans'));
-    }
-
     public function newPlan(){
         $data = request()->validate([
             'plan_name' => 'required',
@@ -40,6 +27,4 @@ class PlanController extends Controller
         UserPlan::where('plan_id', $plan_id)->delete();
         return redirect('/plan');
     }
-
-
 }

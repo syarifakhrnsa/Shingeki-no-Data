@@ -64,9 +64,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="mb-3 mb-md-0">
-                                <div class="date" id="date1" data-target-input="nearest">
-                                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Date" data-target="#date1" data-toggle="datetimepicker" name="date"/>
-                                </div>
+                                <input type="date" class="form-control p-4" placeholder="Date" name="date"/>
                             </div>
                         </div>
                         <div class="col-md-3">

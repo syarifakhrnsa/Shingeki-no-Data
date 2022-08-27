@@ -32,14 +32,16 @@ Route::get('/blog/3', function () {
 // auth only
 Route::middleware('auth')->group(function () {
     Route::get('/test', [MyTest::class,'clustering']);
-    Route::get('/plan', [PlanController::class,'allPlans']);
+    Route::get('/plan', function () {
+        return view('content.plan');
+    });
     Route::post('/newplan', [PlanController::class,'newPlan'])->name('newplan');
     Route::get('/deleteplan/{plan_id}', [PlanController::class,'deletePlan'])->name('deleteplan');
     Route::get('/map', function () {
         return redirect('/plan');
     });
 
-    Route::get('/map/{plan_idid}', [MapController::class,'loadMap'])->name('map');
+    Route::get('/map/{plan_id}', [MapController::class,'loadMap'])->name('map');
     Route::post('/addlocation/{plan_id}', [MapController::class,'addLocation'])->name('addlocation');
     Route::get('/deletelocation/{plan_id}/{location_id}', [MapController::class,'deleteLocation'])->name('deletelocation');
     Route::post('/kmeans/{plan_id}', [MapController::class,'kmeans'])->name('kmeans');
